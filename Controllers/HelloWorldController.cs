@@ -15,8 +15,6 @@ public class HelloWorldController : ControllerBase
         _helloWorldService = helloWorldService;
         _logger = logger;
         _context = context;
-        _helloWorldService = helloWorldService;
-        _logger = logger;
     }
 
     [HttpGet]

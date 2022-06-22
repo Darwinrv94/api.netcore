@@ -1,32 +1,32 @@
 public class TimeMiddleware
 {
-  readonly RequestDelegate next;
+    readonly RequestDelegate next;
 
-  public TimeMiddleware(RequestDelegate nextRequest)
-  {
-    next = nextRequest;
-  }
-
-  public async Task Invoke(Microsoft.AspNetCore.Http.HttpContext context)
-  {
-    if (context.Request.Query.Any(p => p.Key == "time"))
+    public TimeMiddleware(RequestDelegate nextRequest)
     {
-      await context.Response.WriteAsync(DateTime.Now.ToShortTimeString());
+        next = nextRequest;
     }
 
-    if (!context.Response.HasStarted)
+    public async Task Invoke(Microsoft.AspNetCore.Http.HttpContext context)
     {
-      await next.Invoke(context);
+        if (context.Request.Query.Any(p => p.Key == "time"))
+        {
+            await context.Response.WriteAsync(DateTime.Now.ToShortTimeString());
+        }
+
+        if (!context.Response.HasStarted)
+        {
+            await next.Invoke(context);
+        }
     }
-  }
 
 }
 
 
 public static class TimeMiddlewareExtension
 {
-  public static IApplicationBuilder UseTimeMiddleware(this IApplicationBuilder builder)
-  {
-    return builder.UseMiddleware<TimeMiddleware>();
-  }
+    public static IApplicationBuilder UseTimeMiddleware(this IApplicationBuilder builder)
+    {
+        return builder.UseMiddleware<TimeMiddleware>();
+    }
 }

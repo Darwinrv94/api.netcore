@@ -3,24 +3,26 @@ using webapi.Models;
 
 namespace webapi;
 
-public class TareasContext: DbContext
+public class TareasContext : DbContext
 {
     public DbSet<Categoria> Categorias { get; set; } = null!;
     public DbSet<Tarea> Tareas { get; set; } = null!;
 
-    public TareasContext(DbContextOptions<TareasContext> options) :base(options) { }
+    public TareasContext(DbContextOptions<TareasContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         List<Categoria> categoriasInit = new List<Categoria>();
 
-        categoriasInit.Add(new Categoria() {
+        categoriasInit.Add(new Categoria()
+        {
             CategoriaId = Guid.Parse("fe2de405-c38e-4c90-ac52-da0540dfb4ef"),
             Nombre = "Actividades pendientes",
             Peso = 20
         });
 
-        categoriasInit.Add(new Categoria() {
+        categoriasInit.Add(new Categoria()
+        {
             CategoriaId = Guid.Parse("fe2de405-c38e-4c90-ac52-da0540dfb402"),
             Nombre = "Actividades personales",
             Peso = 50
@@ -41,7 +43,8 @@ public class TareasContext: DbContext
 
         List<Tarea> tareasInit = new List<Tarea>();
 
-        tareasInit.Add(new Tarea() {
+        tareasInit.Add(new Tarea()
+        {
             TareaId = Guid.Parse("fe2de405-c38e-4c90-ac52-da0540dfb410"),
             CategoriaId = Guid.Parse("fe2de405-c38e-4c90-ac52-da0540dfb4ef"),
             PrioridadTarea = Prioridad.Media,
@@ -49,7 +52,8 @@ public class TareasContext: DbContext
             FechaCreacion = DateTime.Now
         });
 
-        tareasInit.Add(new Tarea() {
+        tareasInit.Add(new Tarea()
+        {
             TareaId = Guid.Parse("fe2de405-c38e-4c90-ac52-da0540dfb411"),
             CategoriaId = Guid.Parse("fe2de405-c38e-4c90-ac52-da0540dfb402"),
             PrioridadTarea = Prioridad.Baja,
@@ -62,7 +66,7 @@ public class TareasContext: DbContext
             tarea.ToTable("Tarea");
 
             tarea.HasKey(p => p.TareaId);
-            tarea.HasOne(p => p.Categoria).WithMany(p=> p.Tareas).HasForeignKey(p=> p.CategoriaId);
+            tarea.HasOne(p => p.Categoria).WithMany(p => p.Tareas).HasForeignKey(p => p.CategoriaId);
             tarea.Property(p => p.Titulo).IsRequired().HasMaxLength(200);
             tarea.Property(p => p.Descripcion).IsRequired(false);
             tarea.Property(p => p.PrioridadTarea);
