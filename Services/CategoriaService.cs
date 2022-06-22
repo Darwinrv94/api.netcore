@@ -17,7 +17,7 @@ public class CategoriaService : ICategoriaService
 
   public async Task Save(Categoria categoria)
   {
-    _context.Add(categoria);
+    await _context.AddAsync(categoria);
     await _context.SaveChangesAsync();
   }
 
