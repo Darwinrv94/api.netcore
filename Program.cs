@@ -7,6 +7,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//builder.Services.AddScoped<IHelloWorldService, HelloWorldService>();
+
+builder.Services.AddScoped<IHelloWorldService>(p => new HelloWorldService());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,6 +23,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+//app.UseWelcomePage();
+// app.UseTimeMiddleware();
 
 app.MapControllers();
 
